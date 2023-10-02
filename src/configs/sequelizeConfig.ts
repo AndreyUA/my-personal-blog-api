@@ -10,12 +10,26 @@ export const sequelizeConfig = (): SequelizeModuleOptions => {
 
   switch (process.env.NODE_ENV) {
     case 'prod':
-    case 'dev':
+    case 'dev': {
+      return {
+        ...partialConfig,
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE_NAME,
+        host: process.env.DB_HOST,
+        port: +process.env.DB_PORT,
+        // TODO: change to false
+        synchronize: true,
+        // TODO: change to false
+        autoLoadModels: true,
+      };
+    }
     case 'test': {
       return {
         ...partialConfig,
         storage: 'db-test.sqlite',
         synchronize: true,
+        autoLoadModels: true,
       };
     }
     default: {
