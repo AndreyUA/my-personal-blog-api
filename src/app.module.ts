@@ -1,14 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import {
-  SequelizeModule,
-  SequelizeModuleAsyncOptions,
-} from '@nestjs/sequelize';
-import { Dialect } from 'sequelize';
+import { ConfigModule } from '@nestjs/config';
+import { SequelizeModule } from '@nestjs/sequelize';
 import * as Joi from 'joi';
 
 import { ArticlesModule } from './articles/articles.module';
-import { Article } from './articles/models/article.model';
+import { sequelizeConfig } from './configs/sequelizeConfig';
 
 @Module({
   imports: [
@@ -33,16 +29,7 @@ import { Article } from './articles/models/article.model';
           .required(),
       }),
     }),
-    SequelizeModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        dialect: config.get<Dialect>('DB_DIALECT'),
-        storage: 'db-test.sqlite',
-        models: [Article],
-        synchronize: true,
-        autoLoadModels: true,
-      }),
-    } as SequelizeModuleAsyncOptions),
+    SequelizeModule.forRoot(sequelizeConfig()),
     ArticlesModule,
   ],
   controllers: [],
