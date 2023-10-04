@@ -1,3 +1,8 @@
+const fs = require('fs');
+const dotenv = require('dotenv');
+
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+
 module.exports = {
   dev: {
     dialect: process.env.DB_DIALECT,
