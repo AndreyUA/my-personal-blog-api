@@ -19,8 +19,10 @@
     "test:debug": "NODE_ENV=test node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "rimraf db-test.sqlite && NODE_ENV=test jest --config ./test/jest-e2e.json --maxWorkers=1",
     "db-dev:start": "docker-compose up",
-    "db-migration-dev:generate": "NODE_ENV=dev npx sequelize-cli migration:generate --name ${npm_config_name}",
-    "db-migration-dev:migrate": "NODE_ENV=dev npx sequelize-cli db:migrate"
+    "db-model:generate": "NODE_ENV=dev npx sequelize-cli model:generate --name ${npm_config_name} --attributes ${npm_config_attributes}",
+    "db-migration:generate": "NODE_ENV=dev npx sequelize-cli migration:generate --name ${npm_config_name}",
+    "db-migration-dev:migrate": "NODE_ENV=dev npx sequelize-cli db:migrate",
+    "db-migration-prod:migrate": "NODE_ENV=prod npx sequelize-cli db:migrate"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
