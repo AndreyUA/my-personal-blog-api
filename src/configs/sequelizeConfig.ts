@@ -18,9 +18,7 @@ export const sequelizeConfig = (): SequelizeModuleOptions => {
         database: process.env.DB_DATABASE_NAME,
         host: process.env.DB_HOST,
         port: +process.env.DB_PORT,
-        // TODO: change to false
         synchronize: false,
-        // TODO: change to false
         autoLoadModels: false,
       };
     }
