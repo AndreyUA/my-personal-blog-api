@@ -8,14 +8,15 @@ import {
   Put,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
+import { CreateArticleDto } from './dto/create-article.dto';
 
 @Controller('articles')
 export class ArticlesController {
   constructor(private articlesService: ArticlesService) {}
 
   @Post()
-  async createArticle() {
-    return await this.articlesService.createArticle();
+  async createArticle(@Body() createArticleDto: CreateArticleDto) {
+    return await this.articlesService.createArticle(createArticleDto);
   }
 
   @Get()

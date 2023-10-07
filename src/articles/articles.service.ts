@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 
 import { Article } from './models/article.model';
+import { CreateArticleDto } from './dto/create-article.dto';
 
 @Injectable()
 export class ArticlesService {
@@ -10,15 +11,8 @@ export class ArticlesService {
     private articleModel: typeof Article,
   ) {}
 
-  async createArticle(): Promise<Article> {
-    const article = await this.articleModel.create({
-      titleEn: 'English title',
-      contentEn: 'English content',
-      titleUa: 'Ukrainian title',
-      contentUa: 'Ukrainian content',
-      titleRu: 'Russian title',
-      contentRu: 'Russian content',
-    });
+  async createArticle(articleDto: CreateArticleDto): Promise<Article> {
+    const article = await this.articleModel.create({ ...articleDto });
 
     return article;
   }
