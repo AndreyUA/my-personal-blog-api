@@ -29,14 +29,13 @@ export class ArticlesService {
     return article;
   }
 
-  async updateArticle(id: number, data: any): Promise<Article> {
+  async updateArticle(
+    id: number,
+    articleDto: CreateArticleDto,
+  ): Promise<Article> {
     const article = await this.articleModel.findByPk(id);
-    article.titleEn = data.titleEn;
-    article.contentEn = data.contentEn;
-    article.titleUa = data.titleUa;
-    article.contentUa = data.contentUa;
-    article.titleRu = data.titleRu;
-    article.contentRu = data.contentRu;
+    article.set({ ...articleDto });
+
     await article.save();
 
     return article;

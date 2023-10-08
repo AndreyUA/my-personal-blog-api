@@ -30,8 +30,14 @@ export class ArticlesController {
   }
 
   @Put(':id')
-  async updateArticle(@Param('id') id: string, @Body() data: any) {
-    return await this.articlesService.updateArticle(parseInt(id), data);
+  async updateArticle(
+    @Param('id') id: string,
+    @Body() createArticleDto: CreateArticleDto,
+  ) {
+    return await this.articlesService.updateArticle(
+      parseInt(id),
+      createArticleDto,
+    );
   }
 
   @Delete(':id')
