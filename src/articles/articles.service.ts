@@ -57,6 +57,7 @@ export class ArticlesService {
       attributes: [
         `title${this.capitalizeFirstLetter(language)}`,
         `content${this.capitalizeFirstLetter(language)}`,
+        'tags',
       ],
     });
 
@@ -68,6 +69,7 @@ export class ArticlesService {
       attributes: [
         `title${this.capitalizeFirstLetter(language)}`,
         `content${this.capitalizeFirstLetter(language)}`,
+        'tags',
       ],
     });
 

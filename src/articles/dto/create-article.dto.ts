@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsString, IsArray, ArrayMinSize } from 'class-validator';
 
 export class CreateArticleDto {
   @IsString()
@@ -18,4 +18,9 @@ export class CreateArticleDto {
 
   @IsString()
   contentRu: string;
+
+  @IsArray()
+  @IsString({ each: true })
+  @ArrayMinSize(1)
+  tags: Array<string>;
 }
