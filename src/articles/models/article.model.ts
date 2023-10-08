@@ -5,6 +5,7 @@ import {
   Model,
   PrimaryKey,
   Table,
+  DataType,
 } from 'sequelize-typescript';
 
 @Table
@@ -37,4 +38,8 @@ export class Article extends Model {
   @AllowNull(false)
   @Column
   contentRu: string;
+
+  @AllowNull(false)
+  @Column({ type: DataType.ARRAY(DataType.STRING) })
+  tags: Array<string>;
 }
