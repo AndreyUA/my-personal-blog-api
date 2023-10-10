@@ -3,28 +3,44 @@ import { Dialect } from 'sequelize';
 import { Article } from '../articles/models/article.model';
 
 export const sequelizeConfig = (): SequelizeModuleOptions => {
-  const partialConfig = {
+  const partialBaseConfig = {
     dialect: process.env.DB_DIALECT as Dialect,
     models: [Article],
   } as Partial<SequelizeModuleOptions>;
 
+  const partialCoreConfig = {
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE_NAME,
+    host: process.env.DB_HOST,
+    port: +process.env.DB_PORT,
+    synchronize: false,
+    autoLoadModels: false,
+  } as Partial<SequelizeModuleOptions>;
+
   switch (process.env.NODE_ENV) {
-    case 'prod':
+    case 'prod': {
+      return {
+        ...partialBaseConfig,
+        ...partialCoreConfig,
+        ssl: true,
+        dialectOptions: {
+          ssl: {
+            require: true,
+            rejectUnauthorized: false,
+          },
+        },
+      };
+    }
     case 'dev': {
       return {
-        ...partialConfig,
-        username: process.env.DB_USERNAME,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_DATABASE_NAME,
-        host: process.env.DB_HOST,
-        port: +process.env.DB_PORT,
-        synchronize: false,
-        autoLoadModels: false,
+        ...partialBaseConfig,
+        ...partialCoreConfig,
       };
     }
     case 'test': {
       return {
-        ...partialConfig,
+        ...partialBaseConfig,
         storage: 'db-test.sqlite',
         synchronize: true,
         autoLoadModels: true,

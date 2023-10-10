@@ -19,5 +19,11 @@ module.exports = {
     database: process.env.DB_DATABASE_NAME,
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
+    ssl: 'require',
+    dialectOptions: {
+      ssl: {
+        require: true,
+      },
+    },
   },
 };
