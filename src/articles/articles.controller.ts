@@ -7,13 +7,28 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
+import { Article } from './models/article.model';
 
+@ApiTags('Articles')
 @Controller('articles')
 export class ArticlesController {
   constructor(private articlesService: ArticlesService) {}
 
+  @ApiCreatedResponse({
+    description: 'The article has been successfully created.',
+    type: Article,
+  })
+  @ApiBadRequestResponse({
+    description: 'Bad request.',
+  })
   @Post()
   async createArticle(@Body() createArticleDto: CreateArticleDto) {
     return await this.articlesService.createArticle(createArticleDto);
