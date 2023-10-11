@@ -1,7 +1,6 @@
 import { SequelizeModuleOptions } from '@nestjs/sequelize';
 import { Dialect } from 'sequelize';
 import { Article } from '../articles/models/article.model';
-import pg from 'pg';
 
 export const sequelizeConfig = (): SequelizeModuleOptions => {
   const partialBaseConfig = {
@@ -31,7 +30,7 @@ export const sequelizeConfig = (): SequelizeModuleOptions => {
             rejectUnauthorized: false,
           },
         },
-        dialectModule: pg,
+        dialectModule: require('pg'),
       };
     }
     case 'dev': {
