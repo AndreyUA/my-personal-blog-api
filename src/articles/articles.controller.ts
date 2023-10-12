@@ -10,6 +10,7 @@ import {
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
+  ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
 
@@ -34,6 +35,10 @@ export class ArticlesController {
     return await this.articlesService.createArticle(createArticleDto);
   }
 
+  @ApiOkResponse({
+    description: 'The articles have been successfully retrieved.',
+    type: [Article],
+  })
   @Get()
   async getArticles() {
     return await this.articlesService.getArticles();
