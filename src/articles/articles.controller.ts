@@ -57,6 +57,13 @@ export class ArticlesController {
     return await this.articlesService.getArticle(parseInt(id));
   }
 
+  @ApiOkResponse({
+    description: 'The article has been successfully updated.',
+    type: Article,
+  })
+  @ApiNotFoundResponse({
+    description: 'Article not found.',
+  })
   @Put(':id')
   async updateArticle(
     @Param('id') id: string,

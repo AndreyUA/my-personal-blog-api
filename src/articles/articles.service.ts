@@ -38,6 +38,11 @@ export class ArticlesService {
     articleDto: CreateArticleDto,
   ): Promise<Article> {
     const article = await this.articleModel.findByPk(id);
+
+    if (!article) {
+      throw new NotFoundException();
+    }
+
     article.set({ ...articleDto });
 
     await article.save();
