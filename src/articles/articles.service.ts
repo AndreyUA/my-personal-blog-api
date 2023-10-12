@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 
 import { Article } from './models/article.model';
@@ -25,6 +25,10 @@ export class ArticlesService {
 
   async getArticle(id: number): Promise<Article> {
     const article = await this.articleModel.findByPk(id);
+
+    if (!article) {
+      throw new NotFoundException();
+    }
 
     return article;
   }

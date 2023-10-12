@@ -10,6 +10,7 @@ import {
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -44,6 +45,13 @@ export class ArticlesController {
     return await this.articlesService.getArticles();
   }
 
+  @ApiOkResponse({
+    description: 'The article has been successfully retrieved.',
+    type: Article,
+  })
+  @ApiNotFoundResponse({
+    description: 'Article not found.',
+  })
   @Get(':id')
   async getArticle(@Param('id') id: string) {
     return await this.articlesService.getArticle(parseInt(id));
