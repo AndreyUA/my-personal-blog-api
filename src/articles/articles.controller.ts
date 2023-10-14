@@ -34,7 +34,9 @@ export class ArticlesController {
     description: 'Bad request.',
   })
   @Post()
-  async createArticle(@Body() createArticleDto: CreateArticleDto) {
+  async createArticle(
+    @Body() createArticleDto: CreateArticleDto,
+  ): Promise<Article> {
     return await this.articlesService.createArticle(createArticleDto);
   }
 
@@ -43,7 +45,7 @@ export class ArticlesController {
     type: [Article],
   })
   @Get()
-  async getArticles() {
+  async getArticles(): Promise<Array<Article>> {
     return await this.articlesService.getArticles();
   }
 
@@ -55,7 +57,7 @@ export class ArticlesController {
     description: 'Article not found.',
   })
   @Get(':id')
-  async getArticle(@Param('id') id: string) {
+  async getArticle(@Param('id') id: string): Promise<Article> {
     return await this.articlesService.getArticle(parseInt(id));
   }
 
@@ -70,7 +72,7 @@ export class ArticlesController {
   async updateArticle(
     @Param('id') id: string,
     @Body() createArticleDto: CreateArticleDto,
-  ) {
+  ): Promise<Article> {
     return await this.articlesService.updateArticle(
       parseInt(id),
       createArticleDto,
@@ -85,12 +87,14 @@ export class ArticlesController {
   })
   @Delete(':id')
   @HttpCode(204)
-  async deleteArticle(@Param('id') id: string) {
+  async deleteArticle(@Param('id') id: string): Promise<void> {
     return await this.articlesService.deleteArticle(parseInt(id));
   }
 
   @Get('/lang/:language')
-  async getArticlesByLanguage(@Param('language') language: string) {
+  async getArticlesByLanguage(
+    @Param('language') language: string,
+  ): Promise<Array<Article>> {
     return await this.articlesService.getArticlesByLanguage(language);
   }
 
@@ -98,7 +102,7 @@ export class ArticlesController {
   async getArticleByLanguageAndId(
     @Param('language') language: string,
     @Param('id') id: string,
-  ) {
+  ): Promise<Article> {
     return await this.articlesService.getArticleByLanguageAndId(
       language,
       parseInt(id),

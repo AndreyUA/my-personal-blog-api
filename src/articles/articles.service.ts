@@ -17,7 +17,7 @@ export class ArticlesService {
     return article;
   }
 
-  async getArticles(): Promise<Article[]> {
+  async getArticles(): Promise<Array<Article>> {
     const articles = await this.articleModel.findAll();
 
     return articles;
@@ -75,7 +75,7 @@ export class ArticlesService {
     return article;
   }
 
-  async getArticlesByLanguage(language: string): Promise<Article[]> {
+  async getArticlesByLanguage(language: string): Promise<Array<Article>> {
     const articles = await this.articleModel.findAll({
       attributes: [
         `title${this.capitalizeFirstLetter(language)}`,
