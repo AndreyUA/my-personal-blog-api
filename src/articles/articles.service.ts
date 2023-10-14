@@ -3,9 +3,12 @@ import { InjectModel } from '@nestjs/sequelize';
 
 import { Article } from './models/article.model';
 import { CreateArticleDto } from './dto/create-article.dto';
+import { Languages } from '../types/languages';
 
 @Injectable()
 export class ArticlesService {
+  allowedLanguagesArray: Array<string> = Object.values(Languages);
+
   constructor(
     @InjectModel(Article)
     private articleModel: typeof Article,
@@ -64,10 +67,16 @@ export class ArticlesService {
     language: string,
     id: number,
   ): Promise<Article> {
+    const formattedLanguage = language.toLowerCase();
+
+    if (!this.allowedLanguagesArray.includes(formattedLanguage)) {
+      throw new NotFoundException();
+    }
+
     const article = await this.articleModel.findByPk(id, {
       attributes: [
-        `title${this.capitalizeFirstLetter(language)}`,
-        `content${this.capitalizeFirstLetter(language)}`,
+        `title${this.capitalizeFirstLetter(formattedLanguage)}`,
+        `content${this.capitalizeFirstLetter(formattedLanguage)}`,
         'tags',
       ],
     });
@@ -76,10 +85,16 @@ export class ArticlesService {
   }
 
   async getArticlesByLanguage(language: string): Promise<Array<Article>> {
+    const formattedLanguage = language.toLowerCase();
+
+    if (!this.allowedLanguagesArray.includes(formattedLanguage)) {
+      throw new NotFoundException();
+    }
+
     const articles = await this.articleModel.findAll({
       attributes: [
-        `title${this.capitalizeFirstLetter(language)}`,
-        `content${this.capitalizeFirstLetter(language)}`,
+        `title${this.capitalizeFirstLetter(formattedLanguage)}`,
+        `content${this.capitalizeFirstLetter(formattedLanguage)}`,
         'tags',
       ],
     });
