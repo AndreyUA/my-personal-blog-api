@@ -50,11 +50,14 @@ export class ArticlesService {
     return article;
   }
 
-  async deleteArticle(id: number): Promise<Article> {
+  async deleteArticle(id: number): Promise<void> {
     const article = await this.articleModel.findByPk(id);
-    await article.destroy();
 
-    return article;
+    if (!article) {
+      throw new NotFoundException();
+    }
+
+    await article.destroy();
   }
 
   async getArticleByLanguageAndId(

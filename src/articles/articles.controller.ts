@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Post,
   Put,
@@ -10,6 +11,7 @@ import {
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
+  ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
@@ -75,7 +77,14 @@ export class ArticlesController {
     );
   }
 
+  @ApiNoContentResponse({
+    description: 'The article has been successfully deleted.',
+  })
+  @ApiNotFoundResponse({
+    description: 'Article not found.',
+  })
   @Delete(':id')
+  @HttpCode(204)
   async deleteArticle(@Param('id') id: string) {
     return await this.articlesService.deleteArticle(parseInt(id));
   }
