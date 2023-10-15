@@ -105,6 +105,13 @@ export class ArticlesController {
     return await this.articlesService.getArticlesByLanguage(language);
   }
 
+  @ApiOkResponse({
+    description: 'The article has been successfully retrieved.',
+    type: Article,
+  })
+  @ApiNotFoundResponse({
+    description: 'Articles not found.',
+  })
   @Get('/lang/:language/:id')
   async getArticleByLanguageAndId(
     @Param('language') language: string,

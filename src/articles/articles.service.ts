@@ -81,6 +81,10 @@ export class ArticlesService {
       ],
     });
 
+    if (!article) {
+      throw new NotFoundException();
+    }
+
     return article;
   }
 
