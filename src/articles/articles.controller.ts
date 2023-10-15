@@ -91,6 +91,13 @@ export class ArticlesController {
     return await this.articlesService.deleteArticle(parseInt(id));
   }
 
+  @ApiOkResponse({
+    description: 'The articles have been successfully retrieved.',
+    type: [Article],
+  })
+  @ApiNotFoundResponse({
+    description: 'Articles not found.',
+  })
   @Get('/lang/:language')
   async getArticlesByLanguage(
     @Param('language') language: string,
