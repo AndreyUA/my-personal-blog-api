@@ -20,6 +20,7 @@ import {
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { Article } from './models/article.model';
+import { CurrentLanguageArticleDto } from './dto/current-language-article.dto';
 
 @ApiTags('Articles')
 @Controller('articles')
@@ -93,7 +94,7 @@ export class ArticlesController {
 
   @ApiOkResponse({
     description: 'The articles have been successfully retrieved.',
-    type: [Article],
+    type: [CurrentLanguageArticleDto],
   })
   @ApiNotFoundResponse({
     description: 'Articles not found.',
@@ -101,13 +102,13 @@ export class ArticlesController {
   @Get('/lang/:language')
   async getArticlesByLanguage(
     @Param('language') language: string,
-  ): Promise<Array<Article>> {
+  ): Promise<Array<CurrentLanguageArticleDto>> {
     return await this.articlesService.getArticlesByLanguage(language);
   }
 
   @ApiOkResponse({
     description: 'The article has been successfully retrieved.',
-    type: Article,
+    type: CurrentLanguageArticleDto,
   })
   @ApiNotFoundResponse({
     description: 'Articles not found.',
@@ -116,7 +117,7 @@ export class ArticlesController {
   async getArticleByLanguageAndId(
     @Param('language') language: string,
     @Param('id') id: string,
-  ): Promise<Article> {
+  ): Promise<CurrentLanguageArticleDto> {
     return await this.articlesService.getArticleByLanguageAndId(
       language,
       parseInt(id),
